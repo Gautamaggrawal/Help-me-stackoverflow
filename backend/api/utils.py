@@ -1,7 +1,7 @@
 import requests
 from requests.exceptions import HTTPError
 from django.conf import settings
-from api.tasks import populatedb
+from api.tasks import populatedb, populateanswers
 from celery.result import AsyncResult
 import json
 
@@ -62,3 +62,20 @@ class GetStackExchange:
             response.raise_for_status()
         except Exception as err:
             print(f'Other error occurred: {err}')
+
+    def answer_search(self,question_id, order="desc", sort="activity", site="stackoverflow"):
+        param={
+            "order": order,
+            "sort" : sort,
+            "site" : "stackoverflow"
+        }
+        try:
+            response = requests.get(self.EP.format('questions/'+str(question_id)+'/answers'), params=param)
+            print(response.url)
+            json_response = response.json()
+            populateanswers.delay(question_id,json_response)
+            return response.json()
+            response.raise_for_status()
+        except Exception as err:
+            print(f'Other error occurred: {err}')
+

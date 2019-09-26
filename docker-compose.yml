@@ -45,11 +45,3 @@ services:
     links:
       - db
       - redis
-
-
-
-
-
-
-
-

@@ -7,3 +7,11 @@ class Questions(models.Model):
 
 	def __str__(self):
 		return self.query
+
+class Answers(models.Model):
+	question_id = models.IntegerField()
+	ques_data = JSONField(null=True)
+	
+	def __str__(self):
+		return str(self.question_id)
+

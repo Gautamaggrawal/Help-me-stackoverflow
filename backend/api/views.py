@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from rest_framework import generics
 from .utils import GetStackExchange
-from api.models import Questions
+from api.models import Questions, Answers
 from api.serializers import QuestionSerializer
 
 
@@ -36,24 +36,31 @@ class Advance_search_View(APIView):
 	def get(self,request,*args,**kwargs):
 		page=self.request.query_params.get("page")
 		query=self.request.query_params.get("query")
-		print(page,query)
+		ques_qs = Questions.objects.filter(query=query)
+		if ques_qs.exists():
+			ques_object = ques_qs.first()
+			serialized_data = QuestionSerializer(ques_object)
+			data = serialized_data.data['data']
+			return Response(data,status=status.HTTP_200_OK)
 		adv_res = GetStackExchange()
 		adv_res = adv_res.advance_search(query,page)
 		return Response(adv_res,status=status.HTTP_200_OK)
 
+class Detail_View(APIView):
+	def get(self,request,*args,**kwargs):
+		ques_id = self.request.query_params.get("quesid",None)
+		
+		if ques_id is None:
+			return Response({"error":"Question Id is required"},status=400)
 
-# class movieDetail(APIView):
+		ans_qs = Answers.objects.filter(question_id=ques_id)
+		if ans_qs.exists():
+			ans_object = ans_qs.first()
+			serialized_data = AnswerSerializer(ques_object)
+			data = serialized_data.data['data']
+			return Response(data,status=status.HTTP_200_OK)
 
-# 	def get(self,request,*args,**kwargs):
-# 		page=self.request.query_params.get("page")
-# 		movieId=self.request.query_params.get("movieId")
-# 		detail=get_details(page,movieId)
-# 		return Response(detail,status=status.HTTP_200_OK)
+		ans_res = GetStackExchange()
+		ans_res = ans_res.answer_search(ques_id)
+		return Response(ans_res,status=status.HTTP_200_OK)
 
-# class movieKeyword(APIView):
-
-# 	def get(self,request,*args,**kwargs):
-# 		movieId=self.request.query_params.get("movieId")
-# 		kind=self.request.query_params.get("type")
-# 		movie_keyword=get_all_detail(movieId,kind)
-# 		return Response(movie_keyword,status=status.HTTP_200_OK)
