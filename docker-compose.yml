@@ -13,7 +13,7 @@ services:
 
   # Redis
   redis:
-    image: redis:4.0.9
+    image: "redis:alpine"
     hostname: redis
 
   # Django web server
