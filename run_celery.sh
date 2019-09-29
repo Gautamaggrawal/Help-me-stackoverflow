@@ -3,6 +3,9 @@
 # wait for RabbitMQ server to start
 sleep 10
 
-cd myproject  
+cd backend  
 # run Celery worker for our project myproject with Celery configuration stored in Celeryconf
-su -m myuser -c "celery worker -A myproject.celeryconf -Q default -n default@%h"
+#"celery worker -A myproject.celeryconf -Q default -n default@%h"
+"celery -A stackoveflow_backend worker -l info"
+
+
