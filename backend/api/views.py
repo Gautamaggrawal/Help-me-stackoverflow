@@ -10,6 +10,7 @@ from api.serializers import QuestionSerializer
 
 
 class All_questions_View(APIView):
+
 	def get(self,request,*args,**kwargs):
 		page=self.request.query_params.get("page")
 		all_ques = GetStackExchange()
@@ -18,9 +19,16 @@ class All_questions_View(APIView):
 
 
 class Query_ques_View(APIView):
+
 	def get(self,request,*args,**kwargs):
 		page = self.request.query_params.get("page")
 		query = self.request.query_params.get("query")
+		sort = self.request.query_params.get("sort")
+		order = self.request.query_params.get("order")
+		if(sort=="0"):
+			sort="desc"
+		if(order=="0"):
+			order="activity"
 		ques_qs = Questions.objects.filter(query=query)
 		if ques_qs.exists():
 			ques_object = ques_qs.first()
@@ -28,7 +36,7 @@ class Query_ques_View(APIView):
 			data = serialized_data.data['data']
 			return Response(data,status=status.HTTP_200_OK)
 		query_ques_res = GetStackExchange()
-		query_ques_res = query_ques_res.search(page,query)
+		query_ques_res = query_ques_res.search(page,query,order,sort)
 		return Response(query_ques_res,status=status.HTTP_200_OK)
 
 class Advance_search_View(APIView):
