@@ -8,7 +8,7 @@ ADD requirements.txt /app/requirements.txt
 WORKDIR /app/
 
 # install python dependencies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 RUN adduser --disabled-password --gecos '' myuser  
 
