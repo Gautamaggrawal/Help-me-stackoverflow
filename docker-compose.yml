@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile
     hostname: web
-    command: ./run_web.sh
+    command: bash run_web.sh
     volumes:
       - .:/app  # mount current directory inside container
     ports:
@@ -39,7 +39,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ./run_celery.sh
+    command: bash run_celery.sh
     volumes:
       - .:/app
     links:
