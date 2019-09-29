@@ -9,6 +9,7 @@ WORKDIR /app/
 
 # install python dependencies
 RUN pip3 install -r requirements.txt
-RUN apt-get install gdal-bin
+RUN sudo apt-get update
+RUN sudo apt-get install gdal-bin
 RUN adduser --disabled-password --gecos '' myuser  
 
