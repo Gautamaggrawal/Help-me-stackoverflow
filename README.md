@@ -1,20 +1,5 @@
 # Help-me-stackoverflow
-An application over StackOverflowAPI for searching questions in StackOverflow
-
-To build container
-docker-compose build
-To start container 
-docker-compose up
-
-Teachnologies Used:
-Django rest framework(APIS)
-Celery(Queue)
-Redis(Message Broker)
-Angular 7 (SPA)
-Docker(Deployement)
-
-# Help-me-stackoverflow
-## An application over StackOverflowAPI for searching questions in StackOverflow
+*** An application over StackOverflowAPI for searching questions in StackOverflow ***
 
 [![Python Version](https://img.shields.io/badge/python-3.7-brightgreen.svg)](https://python.org)
 [![Django Version](https://img.shields.io/badge/django-2.1-brightgreen.svg)](https://djangoproject.com)
@@ -46,7 +31,7 @@ docker-compose up
 ```
 The APIs will be available at **127.0.0.1:8000**.
 
-***To run angular***
+***To run Angular***
 ```bash
 cd frontend/stackoverflowfrontend
 npm install
