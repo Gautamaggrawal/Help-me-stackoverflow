@@ -146,7 +146,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
+print(REDIS_HOST)
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
